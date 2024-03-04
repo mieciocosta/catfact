@@ -1,0 +1,188 @@
+# language:en
+# encoding UTF-8
+@regressivo
+@authbvb
+Feature: Request to get the authorization code
+
+  Background:
+    * def config = read('classpath:br/com/bv/ping/support/config/domain.yaml')
+    * def clientConfig = read('classpath:br/com/bv/ping/support/config/client.yaml')
+    * def env = karate.env ? karate.env : 'qa'
+    * def apiConfig = config[env] ? config[env] : config.qa
+    * def clientConfigEnv = clientConfig[env] ? clientConfig[env] : clientConfig.qa
+    * def endpoint = apiConfig.endpoint
+    * def client_id = clientConfigEnv.client_id
+    * def client_secret = clientConfigEnv.client_secret
+    * def headersBase = read('classpath:br/com/bv/ping/support/data/headers.yaml')
+
+  Scenario Outline: Obtain authorization code and cookies
+    Given url endpoint
+    And path "/as/authorization.oauth2"
+    And params { response_type: '<response_type>', response_mode: '<response_mode>', nonce: '<nonce>', scope: '<scope>', redirect_uri: '<redirect_uri>', client_id: '#(client_id)' }
+    And headers headersBase
+    When method get
+    Then status <authCode>
+    * def authCookies = responseCookies
+    * def flowId = response.id
+    * print 'Auth Cookies:', authCookies
+    * print 'Flow ID:', flowId
+
+    Examples:
+      | authCode | response_type | response_mode | scope      | redirect_uri                                                                     | nonce                                |
+      | 200      | code          | pi.flow       | openid oob | https://api-digitaldes.bancovotorantim.com.br/v1/banco-digital/acesso/autenticar | ed889a56-73c1-48c3-b0ee-49779ea5789f |
+
+
+
+
+____
+
+
+@regressivo
+@submit_action
+Feature: Submeter ação de login com detalhes variáveis do dispositivo
+
+  Background:
+    * call read('classpath:br/com/bv/ping/ciam-pfed-autenticacao/auth_post_user.feature')
+    #* if (result.responseStatus == 400) karate.call('classpath:br/com/bv/ping/ciam-pfed-autenticacao/auth_post_user.feature')
+    * call read('classpath:br/com/bv/ping/ciam-pfed-autenticacao/auth.feature')
+    * def pfCookie = authCookies.PF ? 'PF=' + authCookies.PF.value : ''
+    * def pfPersistentCookie = authCookies['PF.PERSISTENT'] ? '; PF.PERSISTENT=' + authCookies['PF.PERSISTENT'].value : ''
+    * def cookieHeader = pfCookie + pfPersistentCookie
+    * def config = read('classpath:br/com/bv/ping/support/config/domain.yaml')
+    * def api_auth = config.qa.endpoint
+
+  Scenario Outline: Submit Login Action with Varied Device Details 1
+    Given url api_auth
+    And path '/pf-ws/authn/flows/', flowIds
+    And param action = 'SubmitAction'
+    And headers { 'Content-Type': 'application/json', 'X-XSRF-Header': 'PingFederate' }
+    And header Cookie = cookieHeader
+    * def body = read('classpath:br/com/bv/ping/ciam-pfed-autenticacao/data/payload/uat/' + <payload_file>)
+    And request body
+    When method post
+    * print 'header:', header
+    * print 'request:', request
+    Then status <status_code>
+    * print 'Response:', response
+    * def authCode = response.authorizeResponse.code
+    * def authCookies = responseCookies
+
+    Examples:
+      | status_code | payload_file                |
+      | 400         | 'auth_post_device_400.json' |
+
+  Scenario Outline: Submit Login Action with Varied Device Details 2
+    Given url api_auth
+    And path '/pf-ws/authn/flows/', flowIds
+    And param action = 'SubmitAction'
+    And headers { 'Content-Type': 'application/json', 'X-XSRF-Header': 'PingFederate' }
+    And header Cookie = cookieHeader
+    * def body = read('classpath:br/com/bv/ping/ciam-pfed-autenticacao/data/payload/uat/' + <payload_file>)
+    And request body
+    When method post
+    * print 'header:', header
+    * print 'request:', request
+    Then status <status_code>
+    * print 'Response:', response
+    * def authCode = response.authorizeResponse.code
+    * def authCookies = responseCookies
+
+    Examples:
+      | status_code | payload_file                |
+      | 200         | 'auth_post_device_200.json' |
+
+
+
+_____
+
+@regressivo
+  @post
+Feature: Fazer requisição utilizando o cookie de autenticação com variações de parâmetros
+
+  Background:
+    * call read('classpath:br/com/bv/ping/ciam-pfed-autenticacao/auth.feature')
+    * def pfCookie = authCookies.PF ? 'PF=' + authCookies.PF.value : ''
+    * def pfPersistentCookie = authCookies['PF.PERSISTENT'] ? '; PF.PERSISTENT=' + authCookies['PF.PERSISTENT'].value : ''
+    * def cookieHeader = pfCookie + pfPersistentCookie
+    * def config = read('classpath:br/com/bv/ping/support/config/domain.yaml')
+    * def api_auth = config.qa.endpoint
+
+  @success
+  Scenario Outline: Check Username and Password with varied parameters 1
+    Given url api_auth
+    And path "/pf-ws/authn/flows/", flowId
+    And param action = 'checkUsernamePassword'
+    And headers { 'Content-Type': 'application/json', 'X-XSRF-Header': 'PingFederate' }
+    And header Cookie = cookieHeader
+    And request { username: '<username>', password: '<password>' }
+    When method post
+    * print 'header:', header
+    * print 'request:', request
+    Then status <status_code>
+    * print 'Response:', response
+    * def authCookies = responseCookies
+    * def flowIds = response.id
+    * print 'Flow ID:', flowIds
+
+    Examples:
+      | ID  | status_code | username     | password |
+      | 2   | 400         | 10578765187  | 103050   |
+
+  @failure
+  Scenario Outline: Check Username and Password with varied parameters 2
+    Given url api_auth
+    And path "/pf-ws/authn/flows/", flowId
+    And param action = 'checkUsernamePassword'
+    And headers { 'Content-Type': 'application/json', 'X-XSRF-Header': 'PingFederate' }
+    And header Cookie = cookieHeader
+    And request { username: '<username>', password: '<password>' }
+    When method post
+    * print 'header:', header
+    * print 'request:', request
+    Then status <status_code>
+    * print 'Response:', response
+    * def authCookies = responseCookies
+    * def flowIds = response.id
+    * print 'Flow ID:', flowIds
+
+    Examples:
+      | ID  | status_code | username     | password |
+      | 1   | 200         | 11281481700  | 103050   |
+
+
+____
+
+
+@get_token
+Feature: Solicitar token de acesso usando o código de autorização com múltiplos cenários
+
+  Background:
+    # Chama auth.feature para obter o cookie PF
+    * call read('classpath:br/com/bv/ping/ciam-pfed-autenticacao/auth.feature') { someParam: 'someValue' } # Substitua { someParam: 'someValue' } conforme necessário
+    * def pfCookie = 'PF=' + authCookies.PF.value
+
+    # Chama auth_post_device.feature para obter o cookie PF.PERSISTENT e o authCode
+    * def deviceAuthResult = call read('classpath:br/com/bv/ping/ciam-pfed-autenticacao/auth_post_device.feature') { anotherParam: 'anotherValue' } # Substitua { anotherParam: 'anotherValue' } conforme necessário
+    * def pfPersistentCookie = '; PF.PERSISTENT=' + deviceAuthResult.authCookies['PF.PERSISTENT'].value
+    * def authCode = deviceAuthResult.authCode
+    * def cookieHeader = pfCookie + pfPersistentCookie
+
+    * def config = read('classpath:br/com/bv/ping/support/config/domain.yaml')
+    * def api_auth = config.qa.endpoint
+
+  Scenario Outline: Obter token usando código de autorização com diferentes condições
+    Given url api_auth
+    And path "/as/token.oauth2"
+    And headers { 'Content-Type': 'application/x-www-form-urlencoded' }
+    And header Cookie = cookieHeader
+    And form field client_id = 'l7xxccd520e37288487d9f2cc848db059d8e'
+    And form field client_secret = '6c2ccaec32314d4bac543af57ca2ed1b'
+    And form field grant_type = 'authorization_code'
+    And form field code = '#(authCode)'
+    When method post
+    Then status <expectedStatus>
+    * print 'Token Response:', response
+
+    Examples:
+      | authCode                                 | expectedStatus |
+      | deviceAuthResult.authCode               | 200            |
