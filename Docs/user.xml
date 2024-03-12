@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<project>
+    <projectId>16413</projectId>
+    <projectKey>SEGCAN</projectKey>
+    <modelVersion>1.0</modelVersion>
+    <jiraVersion>9.4.14</jiraVersion>
+    <exportDate>2024-03-01T00:00:00Z</exportDate>
+    <folders>
+        <folder fullPath="Dispositivo/Login Variável" index="0"/>
+    </folders>
+    <testCases>
+        <testCase id="227302" key="SEGCAN-T7">
+            <attachments/>
+            <confluencePageLinks/>
+            <createdBy>Desenvolvedor</createdBy>
+            <createdOn>2024-03-01T00:00:00Z</createdOn>
+            <customFields/>
+            <folder><![CDATA[Dispositivo/Login Variável]]></folder>
+            <issues>
+                <issue>
+                    <key>SEGCAN-194</key>
+                    <summary><![CDATA[Submeter login com detalhes variáveis do dispositivo]]></summary>
+                </issue>
+            </issues>
+            <labels/>
+            <name><![CDATA[Submissão de Login com Diferentes Detalhes do Dispositivo]]></name>
+            <owner>JIRAUSER57601</owner>
+            <priority><![CDATA[Normal]]></priority>
+            <status><![CDATA[Draft]]></status>
+            <parameters/>
+            <testScript type="bdd">
+                <details><![CDATA[
+                    Background:
+                    - Configurações iniciais e chamadas para outros arquivos de feature.
+
+                    Scenario: Submeter ação de login com variáveis do dispositivo.
+                    - Realiza a submissão do login com variáveis específicas de dispositivo.
+
+                    # Nota: Os detalhes específicos dependem das chamadas e configurações definidas.
+                ]]></details>
+            </testScript>
+            <updatedBy>Desenvolvedor</updatedBy>
+            <updatedOn>2024-03-01T00:00:00Z</updatedOn>
+        </testCase>
+    </testCases>
+</project>
