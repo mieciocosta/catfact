@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<project>
+    <projectId>16408</projectId>
+    <projectKey>SEGCAN</projectKey>
+    <modelVersion>1.0</modelVersion>
+    <jiraVersion>9.4.14</jiraVersion>
+    <exportDate>2024-03-12 03:18:15 UTC</exportDate>
+    <folders>
+        <folder fullPath="Backend" index="0"/>
+        <folder fullPath="Backend/Backend" index="0"/>
+        <folder fullPath="Backend/Backend/Automatizados" index="0"/>
+        <folder fullPath="Backend/Backend/Automatizados/1- Sucesso" index="1"/>
+    </folders>
+    <testCases>
+        <testCase id="227310" key="SEGCAN-T4">
+            <attachments/>
+            <confluencePageLinks/>
+            <createdBy>Miécio Santos Costa</createdBy>
+            <createdOn>2024-03-01 15:22:40 UTC</createdOn>
+            <customFields/>
+            <folder><![CDATA[Backend/Backend/Automatizados/1- Sucesso]]></folder>
+            <issues>
+                <issue>
+                    <key>SEGCAN-188</key>
+                    <summary><![CDATA[[S10][ATENÇÃO] Aumento da Cobertura de Testes e Inclusão dos Dashboards]]></summary>
+                </issue>
+            </issues>
+            <labels/>
+            <name><![CDATA[Validação de status para obtenção de código de autorização e cookies via GET]]></name>
+            <owner>JIRAUSER57576</owner>
+            <priority><![CDATA[Normal]]></priority>
+            <status><![CDATA[Draft]]></status>
+            <parameters/>
+            <testScript type="bdd">
+                <details><![CDATA[Given estou na url <api_uat>
+And os parâmetros de consulta são configurados para {response_type: '<response_type>', response_mode: '<response_mode>', nonce: '<nonce>', scope: '<scope>', redirect_uri: '<redirect_uri>', client_id: '<client_id>'}
+And os cabeçalhos são <headersBase>
+When faço uma solicitação GET
+Then o status é <status_code>
+
+Examples:
+| response_type | response_mode | nonce                          | scope       | redirect_uri                                  | client_id                           | status_code |
+| 'code'        | 'pi.flow'     | 'ed889a56-73c1-48c3-b0ee-49779ea5789f' | 'openid oob' | 'https://api-digitaldes.bancovotorantim.com.br/v1/banco-digital/acesso/autenticar' | 'l7xxccd520e37288487d9f2cc848db059d8e' | 200         |
+]]></details>
+            </testScript>
+            <updatedBy>Miécio Santos Costa</updatedBy>
+            <updatedOn>2024-03-12 00:17:41 UTC</updatedOn>
+        </testCase>
+        <testCase id="227316" key="SEGCAN-T5">
+            <attachments/>
+            <confluencePageLinks/>
+            <createdBy>Miécio Santos Costa</createdBy>
+            <createdOn>2024-03-01 15:47:41 UTC</createdOn>
+            <customFields/>
+            <folder><![CDATA[Backend/Backend/Automatizados/1- Sucesso]]></folder>
+            <issues>
+                <issue>
+                    <key>SEGCAN-188</key>
+                    <summary><![CDATA[[S10][ATENÇÃO] Aumento da Cobertura de Testes e Inclusão dos Dashboards]]></summary>
+                </issue>
+            </issues>
+            <labels/>
+            <name><![CDATA[Checagem de Username e Password com Parâmetros Variados]]></name>
+            <owner>JIRAUSER57578</owner>
+            <priority><![CDATA[Normal]]></priority>
+            <status><![CDATA[Draft]]></status>
+            <parameters/>
+            <testScript type="bdd">
+                <details><![CDATA[Given estou na url <api_uat> e no path "/pf-ws/authn/flows/", flowId
+And parâmetro de ação 'checkUsernamePassword' com cabeçalhos { 'Content-Type': 'application/json', 'X-XSRF-Header': 'PingFederate' }
+And cabeçalho Cookie = <cookieHeader>
+And solicitação com { username: '<username>', password: '<password>' }
+When faço uma solicitação POST
+Then o status é <status_code>
+
+Examples:
+| status_code | username     | password |
+| 200         | 11281481700  | 103050   |
+]]></details>
+            </testScript>
+            <updatedBy>Miécio Santos Costa</updatedBy>
+            <updatedOn>2024-03-12 00:17:41 UTC</updatedOn>
+        </testCase>
+        <testCase id="227318" key="SEGCAN-T6">
+            <attachments/>
+            <confluencePageLinks/>
+            <createdBy>Miécio Santos Costa</createdBy>
+            <createdOn>2024-03-01 15:53:47 UTC</createdOn>
+            <customFields/>
+            <folder><![CDATA[Backend/Backend/Automatizados/1- Sucesso]]></folder>
+            <issues>
+                <issue>
+                    <key>SEGCAN-188</key>
+                    <summary><![CDATA[[S10][ATENÇÃO] Aumento da Cobertura de Testes e Inclusão dos Dashboards]]></summary>
+                </issue>
+            </issues>
+            <labels/>
+            <name><![CDATA[Submissão de Login com Diferentes Detalhes do Dispositivo]]></name>
+            <priority><![CDATA[Normal]]></priority>
+            <status><![CDATA[Draft]]></status>
+            <parameters/>
+            <testScript type="bdd">
+                <details><![CDATA[Given estou na url <api_uat> e no path '/pf-ws/authn/flows/', flowIds
+And parâmetro de ação 'SubmitAction' com cabeçalhos { 'Content-Type': 'application/json', 'X-XSRF-Header': 'PingFederate' }
+And cabeçalho Cookie = <cookieHeader>
+And o corpo da solicitação é carregado a partir de <payload_file>
+When faço uma solicitação POST
+Then o status é <status_code>
+
+Examples:
+| status_code | payload_file                |
+| 200         | 'auth_post_device_200.json' |
+]]></details>
+            </testScript>
+            <updatedBy>Miécio Santos Costa</updatedBy>
+            <updatedOn>2024-03-12 00:17:41 UTC</updatedOn>
+        </testCase>
+        <testCase id="227321" key="SEGCAN-T7">
+            <attachments/>
+            <confluencePageLinks/>
+            <createdBy>Miécio Santos Costa</createdBy>
+            <createdOn>2024-03-01 16:10:10 UTC</createdOn>
+            <customFields/>
+            <folder><![CDATA[Backend/Backend/Automatizados/1- Sucesso]]></folder>
+            <issues/>
+            <labels/>
+            <name><![CDATA[Obtenção de Token Usando Código de Autorização com Diferentes Condições]]></name>
+            <owner>JIRAUSER57579</owner>
+            <priority><![CDATA[Normal]]></priority>
+            <status><![CDATA[Draft]]></status>
+            <parameters/>
+            <testScript type="bdd">
+                <details><![CDATA[Given estou na url <api_uat> e no path "/as/token.oauth2"
+And cabeçalhos { 'Content-Type': 'application/x-www-form-urlencoded' }
+And cabeçalho Cookie = <cookieHeader>
+And campos de formulário client_id = 'l7xxccd520e37288487d9f2cc848db059d8e', client_secret = '6c2ccaec32314d4bac543af57ca2ed1b', grant_type = 'authorization_code', code = <authCode>
+When faço uma solicitação POST
+Then o status é <expectedStatus>
+
+Examples:
+| authCode                                 | expectedStatus |
+| deviceAuthResult.authCode               | 200            |
+| 'invalid_code_to_trigger_error_response' | 400            |
+]]></details>
+            </testScript>
+            <updatedBy>Miécio Santos Costa</updatedBy>
+            <updatedOn>2024-03-12 00:17:41 UTC</updatedOn>
+        </testCase>
+    </testCases>
+</project>
