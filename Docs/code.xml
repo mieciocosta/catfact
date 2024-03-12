@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<project>
+    <projectId>16415</projectId>
+    <projectKey>SEGCAN</projectKey>
+    <modelVersion>1.0</modelVersion>
+    <jiraVersion>9.4.14</jiraVersion>
+    <exportDate>2024-03-01T00:00:00Z</exportDate>
+    <folders>
+        <folder fullPath="Token/Acesso com Código de Autorização" index="0"/>
+    </folders>
+    <testCases>
+        <testCase id="227304" key="SEGCAN-T9">
+            <attachments/>
+            <confluencePageLinks/>
+            <createdBy>Desenvolvedor</createdBy>
+            <createdOn>2024-03-01T00:00:00Z</createdOn>
+            <customFields/>
+            <folder><![CDATA[Token/Acesso com Código de Autorização]]></folder>
+            <issues>
+                <issue>
+                    <key>SEGCAN-196</key>
+                    <summary><![CDATA[Solicitar token de acesso com código de autorização em múltiplos cenários]]></summary>
+                </issue>
+            </issues>
+            <labels/>
+            <name><![CDATA[Solicitação de Token de Acesso com Código de Autorização]]></name>
+            <owner>JIRAUSER57603</owner>
+            <priority><![CDATA[Normal]]></priority>
+            <status><![CDATA[Draft]]></status>
+            <parameters/>
+            <testScript type="bdd">
+                <details><![CDATA[
+                    Background:
+                    - Configurações iniciais e obtenção de cookies de autenticação.
+
+                    Scenario: Obter token usando código de autorização com diferentes condições.
+                    - Solicita tokens de acesso utilizando códigos de autorização sob várias condições.
+
+                    # Nota: Os detalhes específicos e as condições variam conforme os cenários definidos.
+                ]]></details>
+            </testScript>
+            <updatedBy>Desenvolvedor</updatedBy>
+            <updatedOn>2024-03-01T00:00:00Z</updatedOn>
+        </testCase>
+    </testCases>
+</project>
