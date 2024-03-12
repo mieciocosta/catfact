@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<project>
+    <projectId>16414</projectId>
+    <projectKey>SEGCAN</projectKey>
+    <modelVersion>1.0</modelVersion>
+    <jiraVersion>9.4.14</jiraVersion>
+    <exportDate>2024-03-01T00:00:00Z</exportDate>
+    <folders>
+        <folder fullPath="Usuário/Requisição com Autenticação" index="0"/>
+    </folders>
+    <testCases>
+        <testCase id="227303" key="SEGCAN-T8">
+            <attachments/>
+            <confluencePageLinks/>
+            <createdBy>Desenvolvedor</createdBy>
+            <createdOn>2024-03-01T00:00:00Z</createdOn>
+            <customFields/>
+            <folder><![CDATA[Usuário/Requisição com Autenticação]]></folder>
+            <issues>
+                <issue>
+                    <key>SEGCAN-195</key>
+                    <summary><![CDATA[Requisição com cookie de autenticação e parâmetros variados]]></summary>
+                </issue>
+            </issues>
+            <labels/>
+            <name><![CDATA[Requisição de Verificação de Usuário com Parâmetros Variados]]></name>
+            <owner>JIRAUSER57602</owner>
+            <priority><![CDATA[Normal]]></priority>
+            <status><![CDATA[Draft]]></status>
+            <parameters/>
+            <testScript type="bdd">
+                <details><![CDATA[
+                    Background:
+                    - Configurações iniciais incluindo a obtenção de cookies de autenticação.
+
+                    Scenario: Verificar usuário e senha com parâmetros variados.
+                    - Executa verificações de autenticação com diferentes conjuntos de parâmetros.
+
+                    # Nota: Os detalhes específicos dependem das configurações e parâmetros utilizados.
+                ]]></details>
+            </testScript>
+            <updatedBy>Desenvolvedor</updatedBy>
+            <updatedOn>2024-03-01T00:00:00Z</updatedOn>
+        </testCase>
+    </testCases>
+</project>
