@@ -74,3 +74,14 @@ Monitoração em tempo real proporcionou insights valiosos sobre o comportamento
 ---
 
 Este preenchimento simula como o relatório final seria estruturado com base nas informações dispon
+
+
+Nome do componente e versão: pingfederate-login-service v.11.3.5.0
+Servidor: UAT - srv-pingfeduat02
+IP: 10.183.0.134
+Hostname: srv-pingfeduat02
+Sistema: Linux - RedHat
+vCPU: Intel Xeon CPU 2.20GHz
+Memória: 3.6GB
+HDD: 20GB
+Local: GCP (VM)
